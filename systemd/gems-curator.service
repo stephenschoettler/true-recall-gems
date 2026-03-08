@@ -1,0 +1,10 @@
+[Unit]
+Description=TrueRecall Gems Curator
+After=network.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=%h/.openclaw/true-recall-gems/gems.env
+ExecStart=/usr/bin/python3 %h/.openclaw/true-recall-gems/curator/gems_curator.py
+StandardOutput=journal
+StandardError=journal

@@ -1,0 +1,10 @@
+[Unit]
+Description=Run TrueRecall Gems Curator every 15 minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=15min
+Unit=gems-curator.service
+
+[Install]
+WantedBy=timers.target

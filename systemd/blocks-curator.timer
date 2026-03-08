@@ -1,0 +1,10 @@
+[Unit]
+Description=Run TrueRecall Blocks Curator every 15 minutes
+
+[Timer]
+OnBootSec=3min
+OnUnitActiveSec=15min
+Unit=blocks-curator.service
+
+[Install]
+WantedBy=timers.target
