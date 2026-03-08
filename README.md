@@ -39,7 +39,7 @@ The installer:
 1. Prompts for LLM config (Qdrant + Ollama already configured by Base)
 2. Writes `gems.env` with all env vars
 3. Creates `gems_tr` and `topic_blocks_tr` Qdrant collections
-4. Installs and enables systemd timers (runs every 15 minutes)
+4. Installs and enables systemd timers (runs every 30 minutes)
 5. Does a test run of the gems curator
 
 ## 🔧 Manual Install
@@ -81,7 +81,7 @@ systemctl --user enable --now blocks-curator.timer
 
 ### 💎 Gems (`curator/gems_curator.py`)
 
-Runs every 15 minutes via systemd timer. For each batch of ~20 new turns:
+Runs every 30 minutes via systemd timer. For each batch of ~20 new turns:
 
 1. Scrolls `memories_tr` from last cursor position
 2. Filters out system messages and very short content
@@ -95,7 +95,7 @@ Runs every 15 minutes via systemd timer. For each batch of ~20 new turns:
 
 ### 🧱 Blocks (`blocks/blocks_curator.py`)
 
-Runs every 15 minutes via systemd timer. For each batch of ~50 new turns:
+Runs every 30 minutes via systemd timer. For each batch of ~50 new turns:
 
 1. Embeds each turn via Ollama
 2. Greedy clustering by cosine similarity (threshold: 0.72)
