@@ -51,8 +51,8 @@ QDRANT_URL=http://localhost:6333
 OLLAMA_URL=http://localhost:11434
 EMBEDDING_MODEL=snowflake-arctic-embed2
 LLM_API_KEY=your_api_key_here
-LLM_BASE_URL=https://api.groq.com/openai/v1
-LLM_MODEL=llama-3.1-8b-instant
+LLM_BASE_URL=https://api.openai.com/v1
+LLM_MODEL=gpt-4o-mini
 USER_ID=your_user_id
 ENV
 
@@ -71,8 +71,8 @@ systemctl --user enable --now blocks-curator.timer
 | `OLLAMA_URL` | `http://localhost:11434` | Ollama endpoint |
 | `EMBEDDING_MODEL` | `snowflake-arctic-embed2` | Embedding model (1024-dim) |
 | `LLM_API_KEY` | — | API key for your LLM provider (required) |
-| `LLM_BASE_URL` | `https://api.groq.com/openai/v1` | Any OpenAI-compatible base URL |
-| `LLM_MODEL` | `llama-3.1-8b-instant` | Model name for your provider |
+| `LLM_BASE_URL` | `https://api.openai.com/v1` | Any OpenAI-compatible base URL |
+| `LLM_MODEL` | `gpt-4o-mini` | Model name for your provider |
 | `USER_ID` | `user` | User identifier for filtering |
 
 > **Provider examples:** Groq (`https://api.groq.com/openai/v1`), OpenAI (`https://api.openai.com/v1`), Together (`https://api.together.xyz/v1`), OpenRouter (`https://openrouter.ai/api/v1`), local Ollama (`http://localhost:11434/v1`)
