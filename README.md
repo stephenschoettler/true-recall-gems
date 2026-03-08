@@ -1,8 +1,8 @@
-# TrueRecall Gems + Blocks
+# 💎 TrueRecall Gems + Blocks
 
 > Curation addons for [TrueRecall Base](https://gitlab.com/mdkrush/openclaw-true-recall-base) — built on top of the real-time memory capture daemon.
 
-## Three-Tier Architecture
+## 🏗️ Three-Tier Architecture
 
 ```
 true-recall-base (REQUIRED)
@@ -21,14 +21,14 @@ Note: Gems and Blocks are independent addons. Both require Base.
 You can run one or both — they don't interfere with each other.
 ```
 
-## Requirements
+## ✅ Requirements
 
 - **TrueRecall Base** running and capturing turns to `memories_tr`
 - **Qdrant** (local or remote) — same instance used by Base
 - **Ollama** with `snowflake-arctic-embed2` model loaded (1024-dim)
 - **Any OpenAI-compatible LLM API** — Groq (free tier), OpenAI, Together, OpenRouter, local Ollama, etc.
 
-## Quick Install
+## 🚀 Quick Install
 
 ```bash
 chmod +x install.sh
@@ -42,7 +42,7 @@ The installer:
 4. Installs and enables systemd timers (runs every 15 minutes)
 5. Does a test run of the gems curator
 
-## Manual Install
+## 🔧 Manual Install
 
 ```bash
 # Write your config
@@ -63,7 +63,7 @@ systemctl --user enable --now gems-curator.timer
 systemctl --user enable --now blocks-curator.timer
 ```
 
-## Configuration
+## ⚙️ Configuration
 
 | Variable | Default | Description |
 |----------|---------|-------------|
@@ -75,11 +75,11 @@ systemctl --user enable --now blocks-curator.timer
 | `LLM_MODEL` | `gpt-4o-mini` | Model name for your provider |
 | `USER_ID` | `user` | User identifier for filtering |
 
-> **Provider examples:** Groq (`https://api.groq.com/openai/v1`), OpenAI (`https://api.openai.com/v1`), Together (`https://api.together.xyz/v1`), OpenRouter (`https://openrouter.ai/api/v1`), local Ollama (`http://localhost:11434/v1`)
+> 💡 **Provider examples:** Groq (`https://api.groq.com/openai/v1`), OpenAI (`https://api.openai.com/v1`), Together (`https://api.together.xyz/v1`), OpenRouter (`https://openrouter.ai/api/v1`), local Ollama (`http://localhost:11434/v1`)
 
-## How It Works
+## 🧠 How It Works
 
-### Gems (`curator/gems_curator.py`)
+### 💎 Gems (`curator/gems_curator.py`)
 
 Runs every 15 minutes via systemd timer. For each batch of ~20 new turns:
 
@@ -91,9 +91,9 @@ Runs every 15 minutes via systemd timer. For each batch of ~20 new turns:
 6. Deduplication: skips gems with cosine similarity > 0.9 to any existing gem
 7. Stores unique gems to `gems_tr`
 
-State tracked in: `~/.openclaw/true-recall-gems/curator_state.json`
+📍 State tracked in: `~/.openclaw/true-recall-gems/curator_state.json`
 
-### Blocks (`blocks/blocks_curator.py`)
+### 🧱 Blocks (`blocks/blocks_curator.py`)
 
 Runs every 15 minutes via systemd timer. For each batch of ~50 new turns:
 
@@ -103,9 +103,9 @@ Runs every 15 minutes via systemd timer. For each batch of ~50 new turns:
 4. Near-duplicate check (score > 0.85 = update existing block)
 5. Stores new/updated blocks to `topic_blocks_tr`
 
-State tracked in: `~/.openclaw/true-recall-gems/blocks_state.json`
+📍 State tracked in: `~/.openclaw/true-recall-gems/blocks_state.json`
 
-## Searching
+## 🔍 Searching
 
 ```bash
 # Search gems
@@ -118,7 +118,7 @@ python3 scripts/search_blocks.py "memory system architecture"
 python3 scripts/search_blocks.py "PR review process"
 ```
 
-## Qdrant Collections
+## 🗄️ Qdrant Collections
 
 | Collection | Contents | Dimensions |
 |------------|----------|------------|
@@ -126,10 +126,10 @@ python3 scripts/search_blocks.py "PR review process"
 | `gems_tr` | Distilled facts/decisions/preferences/actions | 1024 |
 | `topic_blocks_tr` | Topic cluster summaries | 1024 |
 
-## Credits
+## 🙏 Credits
 
 Built on **TrueRecall Base** by [mdkrush](https://gitlab.com/mdkrush/openclaw-true-recall-base) — the real-time memory capture daemon that makes this possible.
 
-## License
+## 📄 License
 
 MIT
