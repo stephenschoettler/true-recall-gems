@@ -26,7 +26,7 @@ You can run one or both — they don't interfere with each other.
 - **TrueRecall Base** running and capturing turns to `memories_tr`
 - **Qdrant** (local or remote) — same instance used by Base
 - **Ollama** with `snowflake-arctic-embed2` model loaded (1024-dim)
-- **Groq API key** (free tier works) — for LLM extraction and summarization
+- **Any OpenAI-compatible LLM API** — Groq (free tier), OpenAI, Together, OpenRouter, local Ollama, etc.
 
 ## Quick Install
 
@@ -36,7 +36,7 @@ chmod +x install.sh
 ```
 
 The installer:
-1. Prompts for Qdrant/Ollama/Groq config
+1. Prompts for Qdrant/Ollama/LLM config
 2. Writes `gems.env` with all env vars
 3. Creates `gems_tr` and `topic_blocks_tr` Qdrant collections
 4. Installs and enables systemd timers (runs every 15 minutes)
@@ -49,8 +49,10 @@ The installer:
 cat > ~/.openclaw/true-recall-gems/gems.env << ENV
 QDRANT_URL=http://localhost:6333
 OLLAMA_URL=http://localhost:11434
-GROQ_API_KEY=your_key_here
 EMBEDDING_MODEL=snowflake-arctic-embed2
+LLM_API_KEY=your_api_key_here
+LLM_BASE_URL=https://api.groq.com/openai/v1
+LLM_MODEL=llama-3.1-8b-instant
 USER_ID=your_user_id
 ENV
 
@@ -67,9 +69,13 @@ systemctl --user enable --now blocks-curator.timer
 |----------|---------|-------------|
 | `QDRANT_URL` | `http://localhost:6333` | Qdrant endpoint |
 | `OLLAMA_URL` | `http://localhost:11434` | Ollama endpoint |
-| `GROQ_API_KEY` | — | Groq API key (required) |
 | `EMBEDDING_MODEL` | `snowflake-arctic-embed2` | Embedding model (1024-dim) |
+| `LLM_API_KEY` | — | API key for your LLM provider (required) |
+| `LLM_BASE_URL` | `https://api.groq.com/openai/v1` | Any OpenAI-compatible base URL |
+| `LLM_MODEL` | `llama-3.1-8b-instant` | Model name for your provider |
 | `USER_ID` | `user` | User identifier for filtering |
+
+> **Provider examples:** Groq (`https://api.groq.com/openai/v1`), OpenAI (`https://api.openai.com/v1`), Together (`https://api.together.xyz/v1`), OpenRouter (`https://openrouter.ai/api/v1`), local Ollama (`http://localhost:11434/v1`)
 
 ## How It Works
 
@@ -79,7 +85,7 @@ Runs every 15 minutes via systemd timer. For each batch of ~20 new turns:
 
 1. Scrolls `memories_tr` from last cursor position
 2. Filters out system messages and very short content
-3. Sends batch to Groq LLM with extraction prompt
+3. Sends batch to LLM with extraction prompt
 4. Parses response into categorized gems (FACT / DECISION / PREFERENCE / ACTION / STATUS)
 5. Embeds each gem via Ollama Arctic Embed2
 6. Deduplication: skips gems with cosine similarity > 0.9 to any existing gem
@@ -93,7 +99,7 @@ Runs every 15 minutes via systemd timer. For each batch of ~50 new turns:
 
 1. Embeds each turn via Ollama
 2. Greedy clustering by cosine similarity (threshold: 0.72)
-3. Clusters with ≥ 3 turns → sent to Groq for title + summary
+3. Clusters with ≥ 3 turns → sent to LLM for title + summary
 4. Near-duplicate check (score > 0.85 = update existing block)
 5. Stores new/updated blocks to `topic_blocks_tr`
 
