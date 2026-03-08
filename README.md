@@ -1,4 +1,4 @@
-# 💎 TrueRecall Gems + Blocks
+# 💎 TrueRecall Gems & 🧱 Blocks
 
 > Curation addons for [TrueRecall Base](https://gitlab.com/mdkrush/openclaw-true-recall-base) — built on top of the real-time memory capture daemon.
 
