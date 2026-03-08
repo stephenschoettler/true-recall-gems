@@ -23,10 +23,10 @@ You can run one or both — they don't interfere with each other.
 
 ## ✅ Requirements
 
-- **TrueRecall Base** running and capturing turns to `memories_tr`
-- **Qdrant** (local or remote) — same instance used by Base
-- **Ollama** with `snowflake-arctic-embed2` model loaded (1024-dim)
-- **Any OpenAI-compatible LLM API** — Groq (free tier), OpenAI, Together, OpenRouter, local Ollama, etc.
+- **[TrueRecall Base](https://gitlab.com/mdkrush/openclaw-true-recall-base)** running and capturing turns to `memories_tr`
+- **Qdrant** — same instance used by Base
+- **Ollama** with `snowflake-arctic-embed2` loaded — same instance used by Base
+- **Any OpenAI-compatible LLM API** for extraction — Groq (free), OpenAI, Together, OpenRouter, local Ollama, etc.
 
 ## 🚀 Quick Install
 
@@ -36,7 +36,7 @@ chmod +x install.sh
 ```
 
 The installer:
-1. Prompts for Qdrant/Ollama/LLM config
+1. Prompts for LLM config (Qdrant + Ollama already configured by Base)
 2. Writes `gems.env` with all env vars
 3. Creates `gems_tr` and `topic_blocks_tr` Qdrant collections
 4. Installs and enables systemd timers (runs every 15 minutes)
